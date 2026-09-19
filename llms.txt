@@ -1,0 +1,37 @@
+# Cat Parts Direct (hackathon demo)
+
+> Single-page Cat heavy-equipment parts portal (base.html). Everything is local to the page: there is no backend. AI agents can read the catalog, search, and drive the UI without an API key.
+
+## Quick start for agents
+
+1. Open `base.html?agent`. The `?agent` flag (or `?nointro`) skips the ~3 second intro animation. It's also skipped automatically under automation (`navigator.webdriver`) or `prefers-reduced-motion`.
+2. Wait for `<html data-agent-ready="true">` (or the `catagent:ready` window event).
+3. Call the in-page API:
+   - `window.catAgent.listTools()`: tool definitions (JSON Schema)
+   - `await window.catAgent.call("get_catalog")`: all parts, assemblies, programs, and equipment families
+   - `await window.catAgent.call("search_parts", { query: "1R-0716" })`
+   - `await window.catAgent.call("set_equipment_filter", { family: "Dozer", model: "D8T" })`
+   - `await window.catAgent.call("navigate_site", { targetId: "card-hydraulics" })`
+   - `await window.catAgent.call("ask_copilot", { question: "..." })`: needs an OpenAI key entered in the chat panel
+
+All calls return `{ ok: true, ... }` or `{ ok: false, error }`.
+
+## Machine-readable resources
+
+- [agent-tools.json](agent-tools.json): tool manifest (identical to `<script id="agent-tools">` in the page)
+- `<script type="application/ld+json" id="catalog-jsonld">` in base.html: schema.org `ItemList` of `Product`/`Offer` (sku, name, description, category, price in USD)
+
+## Page map (stable element ids)
+
+- `sec-hero`: hero banner
+- `sec-selector`: equipment selector (`#eqFamily`, `#eqModel`, `#eqSerial`, `#applyFilterBtn`)
+- `sec-systems`: 12 assembly buttons: `card-engines`, `card-fluids`, `card-undercarriage`, `card-get`, `card-electrical`, `card-hydraulics`, `card-pm`, `card-lights`, `card-drivetrain`, `card-cab`, `card-tires`, `card-tools`
+- `sec-consumables`: parts `deal-1r0716` (1R-0716), `deal-1r1808` (1R-1808), `deal-advansys` (522-8350), `deal-battery` (153-5710)
+- `sec-programs`: `promo-reman`, `promo-cts`, `promo-sos`
+- `#globalSearchInput`: header search box
+- `#toggleChat`, `#chatWindow`: Cat Technical Copilot chat
+
+## Notes
+
+- Clicking an assembly button, a "Specs" button, or the Search / Find Parts buttons sends a question to the AI copilot and needs an OpenAI key. For key-free results, use `search_parts` and `set_equipment_filter` instead.
+- Header/top-bar links (Dealer Locator, Warranty, Order Status, etc.) open an informational modal. They don't lead to real pages.

@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "name": "Cat Parts Direct (hackathon demo)",
+  "description": "Single-page Cat parts portal demo. All data is local to the page; there is no backend. Agents can read structured data, search parts, set the equipment filter, and focus sections without an API key.",
+  "how_to_use": {
+    "skip_intro": "Load the page with ?agent or ?nointro. The intro is also skipped automatically when navigator.webdriver is true or prefers-reduced-motion is set.",
+    "ready_signal": "Wait for <html data-agent-ready=\"true\"> before calling window.catAgent.",
+    "js_api": "await window.catAgent.call(toolName, args), or the named helpers: listTools(), getCatalog(), searchParts(query), setEquipmentFilter(args), navigate(args), askCopilot(question).",
+    "structured_data": "Product data is in <script type=\"application/ld+json\" id=\"catalog-jsonld\"> (schema.org ItemList of Product/Offer).",
+    "stable_selectors": "Every navigable element has a stable id (see the navigate_site targetId enum). Assembly buttons carry data-context."
+  },
+  "tools": [
+    {
+      "name": "get_catalog",
+      "description": "Return everything on the page as JSON: parts (sku, name, description, category, price, currency), the 12 equipment assemblies, service programs, and the list of equipment families. No API key needed.",
+      "requires_api_key": false,
+      "input_schema": { "type": "object", "properties": {}, "additionalProperties": false }
+    },
+    {
+      "name": "search_parts",
+      "description": "Keyword search over parts, assemblies, and programs on this page (matches SKU with or without dashes, name, description, category). Also fills the visible search box. Returns ranked matches with element ids. No API key needed.",
+      "requires_api_key": false,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "Part number, keyword, or engine/model, e.g. '1R-0716', 'fuel filter', 'C13'." }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "set_equipment_filter",
+      "description": "Set the Equipment Selector fields (family, model, serial/PIN prefix) and return the resulting values. Does not call the AI copilot. No API key needed.",
+      "requires_api_key": false,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "family": { "type": "string", "description": "Keyword matched against the equipment family options, e.g. 'Excavator', 'Dozer', 'Wheel Loader', 'Motor Grader', 'Skid Steer', 'Generator', 'Truck'." },
+          "model": { "type": "string", "description": "Model or prefix, e.g. '336 D2', 'D8T', '980M', 'C15'." },
+          "serial": { "type": "string", "description": "Serial / PIN prefix." }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "navigate_site",
+      "description": "Scroll to a section, assembly, part, or program and highlight it. Optionally fill the search box and/or select an equipment family.",
+      "requires_api_key": false,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "targetId": {
+            "type": "string",
+            "description": "Target element DOM id.",
+            "enum": [
+              "card-engines", "card-fluids", "card-undercarriage", "card-get",
+              "card-electrical", "card-hydraulics", "card-pm", "card-lights",
+              "card-drivetrain", "card-cab", "card-tires", "card-tools",
+              "deal-1r0716", "deal-1r1808", "deal-advansys", "deal-battery",
+              "promo-reman", "promo-cts", "promo-sos", "sec-selector",
+              "sec-consumables", "sec-systems", "sec-hero"
+            ]
+          },
+          "queryFill": { "type": "string", "description": "Optional text to place in the global search input." },
+          "selectFamily": { "type": "string", "description": "Optional equipment family keyword to select, e.g. 'Excavator', 'Dozer'." }
+        },
+        "required": ["targetId"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ask_copilot",
+      "description": "Send a question to the in-page Cat Technical Copilot chat. Requires a user-supplied OpenAI key in the chat panel and returns an error if none is set.",
+      "requires_api_key": true,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" }
+        },
+        "required": ["question"],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
