@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caterpillar | Global Leader in Construction &amp; Mining Equipment</title>
+  <meta name="description" content="Cat parts portal demo: 12 equipment assemblies, fast-moving OEM parts with SKUs and prices, and service programs. AI agents: see llms.txt and agent-tools.json, or call window.catAgent in the page.">
+
+  <!-- AGENT DISCOVERY: machine-readable guides for AI agents -->
+  <link rel="alternate" type="text/plain" href="llms.txt" title="LLM / agent guide">
+  <link rel="describedby" type="application/json" href="#agent-tools" title="Agent tool manifest">
+  <link rel="alternate" type="application/json" href="parts.json" title="Parts catalog (JSON)">
+
+  <!-- TASK 1: decide BEFORE first paint whether to skip the intro, so agents never see the overlay -->
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isAutomation = navigator.webdriver === true;
+      var optOut = params.has('nointro') || params.has('agent');
+      if (isAutomation || reduceMotion || optOut) {
+        document.documentElement.classList.add('no-intro');
+      }
+    })();
+  </script>
+
+  <!-- TASK 3: schema.org structured data for the corporate highlights & pillars shown on this page -->
+  <script type="application/ld+json" id="catalog-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Caterpillar Global Enterprise Highlights & Operational Sectors",
+    "numberOfItems": 4,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Product",
+          "@id": "#deal-1",
+          "sku": "NYSE: CAT",
+          "mpn": "NYSE-CAT",
+          "name": "Global Enterprise Financial Strength",
+          "description": "Decades of dividend growth backed by strong cash flow across heavy industrial cycles.",
+          "category": "Corporate Governance & Financial Strength",
+          "brand": { "@type": "Brand", "name": "Caterpillar Inc." },
+          "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Product",
+          "@id": "#deal-2",
+          "sku": "Cat® Command",
+          "mpn": "CAT-COMMAND",
+          "name": "Autonomous Mining Haulage System",
+          "description": "Over 600 autonomous trucks operating globally with billions of tons safely hauled.",
+          "category": "Autonomy & Technology",
+          "brand": { "@type": "Brand", "name": "Caterpillar Inc." },
+          "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Product",
+          "@id": "#deal-3",
+          "sku": "Cat Reman",
+          "mpn": "CAT-REMAN",
+          "name": "Circular Economy Manufacturing",
+          "description": "Returning end-of-life components to same-as-new condition with 85% less energy used.",
+          "category": "Sustainability & Circular Economy",
+          "brand": { "@type": "Brand", "name": "Caterpillar Inc." },
+          "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Product",
+          "@id": "#deal-4",
+          "sku": "Cat Financial",
+          "mpn": "CAT-FINANCIAL",
+          "name": "Cat Financial Commercial Solutions",
+          "description": "Serving commercial customers and authorized dealers with tailored heavy equipment funding.",
+          "category": "Financial Services",
+          "brand": { "@type": "Brand", "name": "Caterpillar Inc." },
+          "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cat-yellow: #FFCD00;
+      --cat-yellow-hover: #F0BE00;
+      --cat-yellow-glow: rgba(255, 205, 0, 0.6);
+      --cat-black: #111111;
+      --cat-dark: #0A0B0D;
+      --font-main: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --bg-page: #ECEFF3;
+      --surface-card: #FFFFFF;
+      --surface-elevated: #F6F8FA;
+      --border-color: #D6DBE1;
+      --text-main: #111827;
+      --text-muted: #555F6D;
+      --text-accent: #000000;
+      --text-accent-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+      --header-bg: #FFFFFF;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+      --chat-bot-bg: #EEF2F6;
+      --chat-bot-text: #1F2937;
+      --api-panel-bg: #FFF8E1;
+      --api-panel-border: #FFD54F;
+      --api-panel-text: #332200;
+
+      /* High-Res Industrial Stock Assets */
+      --img-excavator-quarry: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80');
+      --img-excavator-dirt: url('https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1200&q=80');
+      --img-track-loader-963: url('https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&w=1200&q=80');
+      --img-excavator-wide: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80');
+      --img-operator-headshot: url('https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80');
+      
+      --img-construction: url('https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80');
+      --img-mining: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80');
+      --img-energy: url('https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=800&q=80');
+      --img-sustainability: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80');
+      --img-technology: url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80');
+      --img-financial: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80');
+      --img-reman: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80');
+      --img-careers: url('https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80');
+      --img-dealers: url('https://images.unsplash.com/photo-1580983218765-f663bec07b37?auto=format&fit=crop&w=800&q=80');
+      --img-innovation: url('https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80');
+      --img-history: url('https://images.unsplash.com/photo-1508873696983-2df5703bc20d?auto=format&fit=crop&w=800&q=80');
+      --img-investors: url('https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=800&q=80');
+
+      --img-cat-financial: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80');
+      --img-cat-digital: url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80');
+      --img-cat-reman: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80');
+      --img-cat-investor: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80');
+    }
+
+    [data-theme="dark"] {
+      --bg-page: #0E1013;
+      --surface-card: #181B20;
+      --surface-elevated: #22262E;
+      --border-color: #2F3540;
+      --text-main: #F3F4F6;
+      --text-muted: #9DA6B4;
+      --text-accent: #FFFFFF;
+      --text-accent-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+      --header-bg: #14161A;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+      --chat-bot-bg: #272C35;
+      --chat-bot-text: #E5E7EB;
+      --api-panel-bg: #2A2412;
+      --api-panel-border: #6B5B16;
+      --api-panel-text: #FFDE6A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.1s ease, color 0.1s ease;
+    }
+
+    #epicIntro {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      pointer-events: all;
+    }
+
+    .blast-door {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: radial-gradient(circle at center, #1c1c1f 0%, #0a0a0c 100%);
+      z-index: 10;
+      transition: transform 1.1s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+
+    .blast-door.door-left {
+      left: 0;
+      border-right: 4px solid var(--cat-yellow);
+      box-shadow: inset -20px 0 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .blast-door.door-right {
+      right: 0;
+      border-left: 4px solid var(--cat-yellow);
+      box-shadow: inset 20px 0 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .blast-door::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(45deg, #111 25%, transparent 25%), 
+                        linear-gradient(-45deg, #111 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #111 75%), 
+                        linear-gradient(-45deg, transparent 75%, #111 75%);
+      background-size: 16px 16px;
+      opacity: 0.25;
+    }
+
+    .speed-grid {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 205, 0, 0.03) 3px, rgba(255, 205, 0, 0.03) 6px);
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    .stage-content {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      user-select: none;
+    }
+
+    .gear-station {
+      position: relative;
+      width: 380px;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gear-main {
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      animation: rotateMainGear 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 25px rgba(255, 205, 0, 0.5));
+    }
+
+    .gear-counter-left {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      top: 5px;
+      left: -20px;
+      animation: rotateCounterGear 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 15px rgba(255, 205, 0, 0.3));
+    }
+
+    .gear-counter-right {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      bottom: 10px;
+      right: -10px;
+      animation: rotateMainGear 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 15px rgba(255, 205, 0, 0.3));
+    }
+
+    @keyframes rotateMainGear {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(260deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateCounterGear {
+      0% { transform: rotate(360deg); }
+      50% { transform: rotate(100deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .spark-ring {
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 205, 0, 0.5);
+      animation: pulseSpark 0.6s infinite linear alternate;
+    }
+
+    @keyframes pulseSpark {
+      0% { transform: scale(0.97) rotate(0deg); border-color: rgba(255, 205, 0, 0.3); }
+      100% { transform: scale(1.03) rotate(180deg); border-color: rgba(255, 205, 0, 0.9); }
+    }
+
+    .intro-cat-emblem {
+      position: absolute;
+      background: var(--cat-black);
+      color: var(--cat-yellow);
+      font-weight: 900;
+      font-size: 42px;
+      letter-spacing: 2px;
+      padding: 10px 24px 8px;
+      border: 3px solid var(--cat-yellow);
+      box-shadow: 0 0 35px var(--cat-yellow-glow), inset 0 0 15px rgba(255, 205, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 25;
+      animation: slamEmblem 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+
+    .intro-cat-emblem::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 32%;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 12px solid var(--cat-yellow);
+    }
+
+    @keyframes slamEmblem {
+      0% { transform: scale(4) rotate(-20deg); opacity: 0; }
+      70% { transform: scale(0.92) rotate(2deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .hud-readout {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud-title {
+      font-size: 13px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .hud-bar-frame {
+      width: 280px;
+      height: 8px;
+      background: #1F2328;
+      border: 1px solid rgba(255, 205, 0, 0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hud-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #FF9800, #FFCD00);
+      box-shadow: 0 0 12px #FFCD00;
+      transition: width 0.05s linear;
+    }
+
+    .hud-stats {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--cat-yellow);
+      letter-spacing: 1px;
+      display: flex;
+      gap: 16px;
+    }
+
+    #epicIntro.hydraulics-firing .stage-content {
+      animation: blastShockwave 0.5s ease-out forwards;
+    }
+
+    @keyframes blastShockwave {
+      0% { transform: scale(1); filter: brightness(1); }
+      40% { transform: scale(1.18); filter: brightness(2.5) drop-shadow(0 0 50px #FFCD00); }
+      100% { transform: scale(0.6); opacity: 0; filter: brightness(0); }
+    }
+
+    #epicIntro.split-open .door-left { transform: translateX(-100%); }
+    #epicIntro.split-open .door-right { transform: translateX(100%); }
+    #epicIntro.dismissed,
+    .no-intro #epicIntro {
+      display: none !important;
+    }
+
+    .btn-skip-intro {
+      position: absolute;
+      bottom: 28px;
+      right: 28px;
+      z-index: 30;
+      background: rgba(17, 17, 17, 0.85);
+      border: 1px solid var(--cat-yellow);
+      color: var(--cat-yellow);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      transition: all 0.15s ease;
+    }
+
+    .btn-skip-intro:hover {
+      background: var(--cat-yellow);
+      color: var(--cat-black);
+      transform: scale(1.05);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--cat-yellow) !important;
+      outline-offset: 3px !important;
+      box-shadow: 0 0 10px var(--cat-yellow-glow) !important;
+    }
+
+    body.magnifier-active { cursor: crosshair; }
+
+    button, input, select, .cat-card, .btn-bg-img, .promo-box, .deal-card {
+      transition: all 0.08s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .main-wrap {
+      width: 100%;
+      max-width: min(1360px, 94vw);
+      margin: 0 auto;
+      padding: 0 clamp(12px, 3vw, 40px) 80px;
+    }
+
+    .top-bar {
+      background: #0A0B0D;
+      color: #9CA3AF;
+      font-size: clamp(10px, 0.8vw, 11px);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 8px clamp(16px, 4vw, 48px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #222;
+      position: relative;
+      z-index: 102;
+    }
+
+    .top-bar a {
+      color: #D1D5DB;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .top-bar a:hover, .top-bar a:focus-visible {
+      color: var(--cat-yellow);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-bg-img {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-main);
+      text-decoration: none;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-bg-img::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.45;
+      filter: contrast(120%) brightness(0.75);
+      z-index: -2;
+      transition: opacity 0.1s ease, transform 0.1s ease;
+    }
+
+    .btn-bg-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 205, 0, 0.92) 0%, rgba(229, 184, 0, 0.96) 100%);
+      opacity: 0.82;
+      mix-blend-mode: multiply;
+      z-index: -1;
+      transition: opacity 0.1s ease;
+    }
+
+    .btn-bg-img:hover::before, .btn-bg-img:focus-visible::before {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+
+    .btn-bg-img:hover::after, .btn-bg-img:focus-visible::after {
+      opacity: 0.6;
+    }
+
+    .btn-bg-img:active { transform: scale(0.98); }
+
+    .btn-label {
+      position: relative;
+      z-index: 2;
+      font-weight: 900;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 6px;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+    }
+
+    .btn-theme-toggle {
+      padding: 3px 8px;
+      border-radius: 16px;
+      margin-left: 14px;
+      border: 1px solid #444;
+    }
+    .btn-theme-toggle::before { background-image: var(--img-operator-headshot); }
+
+    .btn-magnifier-toggle {
+      padding: 3px 8px;
+      border-radius: 16px;
+      margin-left: 10px;
+      border: 1px solid #444;
+    }
+    .btn-magnifier-toggle::before { background-image: var(--img-excavator-quarry); }
+
+    .btn-magnifier-toggle.active {
+      border: 1px solid var(--cat-yellow);
+      box-shadow: 0 0 8px var(--cat-yellow-glow);
+    }
+
+    .btn-search-solid {
+      background: var(--cat-yellow);
+      color: var(--cat-black);
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 2px solid var(--cat-black);
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+      padding: 0 22px;
+      height: 46px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      outline: none;
+    }
+
+    .btn-search-solid:hover, .btn-search-solid:focus-visible {
+      background: var(--cat-yellow-hover);
+    }
+
+    .btn-search-solid:active { transform: scale(0.98); }
+
+    .btn-filter {
+      height: 44px;
+      margin-top: 20px;
+      padding: 0 16px;
+    }
+    .btn-filter::before { background-image: var(--img-track-loader-963); }
+
+    .btn-quick-ask {
+      padding: 5px 12px;
+      font-size: 11px;
+      border-radius: 4px;
+    }
+    .btn-quick-ask::before { background-image: var(--img-excavator-dirt); }
+
+    .btn-chat-send {
+      padding: 0 16px;
+      height: 40px;
+    }
+    .btn-chat-send::before { background-image: var(--img-excavator-wide); }
+
+    .btn-chat-mic {
+      padding: 0 12px;
+      height: 40px;
+      min-width: 44px;
+    }
+    .btn-chat-mic::before { background-image: var(--img-operator-headshot); }
+
+    .btn-chat-mic.recording {
+      animation: micPulse 1s infinite alternate;
+      border-color: #E53935;
+    }
+
+    @keyframes micPulse {
+      0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+      100% { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+    }
+
+    .ai-chat-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 8px 18px;
+      height: 48px;
+      border-radius: 50px;
+      z-index: 1000;
+      border: 2px solid var(--cat-black);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .ai-chat-toggle::before { background-image: var(--img-operator-headshot); }
+
+    header {
+      background: var(--header-bg);
+      border-bottom: 3px solid var(--cat-yellow);
+      padding: 14px clamp(16px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(12px, 2vw, 24px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cat-badge {
+      background: var(--cat-black);
+      color: var(--cat-yellow);
+      font-weight: 900;
+      font-size: 24px;
+      padding: 4px 12px;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cat-badge::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 30%;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid var(--cat-yellow);
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+      text-shadow: var(--text-accent-shadow);
+    }
+
+    .search-wrapper {
+      flex: 1;
+      max-width: 620px;
+      display: flex;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 11px 16px;
+      background: var(--surface-card);
+      color: var(--text-main);
+      border: 2px solid var(--cat-black);
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    [data-theme="dark"] .search-input {
+      border-color: #3B4252;
+    }
+
+    .search-input:focus {
+      border-color: var(--cat-yellow);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1.5vw, 20px);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .nav-actions a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav-actions a:hover, .nav-actions a:focus-visible {
+      color: var(--cat-yellow);
+    }
+
+    .hero-accent {
+      position: relative;
+      overflow: hidden;
+      margin: 28px 0 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+    }
+
+    .hero-accent::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: var(--img-excavator-quarry);
+      background-size: cover;
+      background-position: center 38%;
+      opacity: 0.55;
+      filter: contrast(120%) brightness(0.68);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(90deg, rgba(14, 16, 20, 0.96) 0%, rgba(14, 16, 20, 0.78) 55%, rgba(14, 16, 20, 0.35) 100%);
+      padding: clamp(30px, 4vw, 50px) clamp(24px, 4vw, 44px);
+      color: #FFFFFF;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 3.2vw, 38px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+    }
+
+    .hero h1 span {
+      color: var(--cat-yellow);
+      text-shadow: 0 0 16px var(--cat-yellow-glow);
+    }
+
+    .hero p {
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 500;
+      color: #E5E7EB;
+      max-width: 720px;
+      line-height: 1.5;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .equipment-selector {
+      background: var(--surface-card);
+      margin-bottom: 24px;
+      padding: clamp(16px, 2vw, 24px) clamp(18px, 3vw, 32px);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)) 160px;
+      gap: clamp(12px, 1.5vw, 20px);
+      align-items: center;
+    }
+
+    .select-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .select-group select, .select-group input {
+      width: 100%;
+      height: 44px;
+      padding: 8px 12px;
+      background: var(--surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .select-group select:focus, .select-group input:focus {
+      border-color: var(--cat-yellow);
+    }
+
+    .copilot-inline-banner {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--cat-yellow);
+      border-radius: 6px;
+      padding: 18px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .copilot-inline-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: var(--img-track-loader-963);
+      background-size: cover;
+      background-position: center;
+      opacity: 0.09;
+      pointer-events: none;
+    }
+
+    .banner-text h3 {
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      text-shadow: var(--text-accent-shadow);
+      margin-bottom: 2px;
+    }
+
+    .banner-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .quick-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 36px 0 16px;
+      border-left: 5px solid var(--cat-yellow);
+      padding-left: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(16px, 1.8vw, 19px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      color: var(--text-accent);
+      text-shadow: var(--text-accent-shadow);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+      gap: clamp(10px, 1.5vw, 16px);
+      margin-bottom: 28px;
+    }
+
+    .cat-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 22px 14px;
+      text-align: center;
+      cursor: pointer;
+      color: inherit;
+      box-shadow: var(--card-shadow);
+      z-index: 1;
+      min-height: 154px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font: inherit;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.40;
+      filter: contrast(120%) grayscale(10%);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: -2;
+    }
+
+    .cat-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.90) 100%);
+      z-index: -1;
+      transition: background 0.1s ease;
+    }
+
+    [data-theme="dark"] .cat-card::after {
+      background: linear-gradient(180deg, rgba(14, 16, 19, 0.6) 0%, rgba(14, 16, 19, 0.94) 100%);
+    }
+
+    .cat-card:hover, .cat-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--cat-yellow);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .cat-card:hover::before, .cat-card:focus-visible::before {
+      opacity: 0.65;
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+
+    .card-construction::before { background-image: var(--img-construction); }
+    .card-mining::before { background-image: var(--img-mining); }
+    .card-energy::before { background-image: var(--img-energy); }
+    .card-sustainability::before { background-image: var(--img-sustainability); }
+    .card-technology::before { background-image: var(--img-technology); }
+    .card-financial::before { background-image: var(--img-financial); }
+    .card-reman::before { background-image: var(--img-reman); }
+    .card-careers::before { background-image: var(--img-careers); }
+    .card-dealers::before { background-image: var(--img-dealers); }
+    .card-innovation::before { background-image: var(--img-innovation); }
+    .card-history::before { background-image: var(--img-history); }
+    .card-investors::before { background-image: var(--img-investors); }
+
+    .cat-badge-code {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--cat-yellow);
+      background: var(--cat-black);
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .cat-name {
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.2px;
+      color: var(--text-accent);
+      text-shadow: var(--text-accent-shadow);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .cat-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+      gap: clamp(12px, 1.5vw, 18px);
+      margin-bottom: 32px;
+    }
+
+    .deal-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .deal-card:hover, .deal-card:focus-within {
+      border-color: var(--cat-yellow);
+      transform: translateY(-2px);
+    }
+
+    .deal-photo {
+      height: 145px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .deal-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--cat-yellow);
+      color: #000;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    .deal-body {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .deal-sku {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .deal-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .deal-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .deal-price {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--text-accent);
+    }
+
+    .promo-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: clamp(12px, 1.5vw, 18px);
+      margin-bottom: 32px;
+    }
+
+    .promo-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      padding: clamp(20px, 3vw, 30px) clamp(16px, 2.5vw, 24px);
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--card-shadow);
+      z-index: 1;
+    }
+
+    .promo-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.45;
+      filter: contrast(120%) brightness(0.65);
+      z-index: -2;
+      transition: transform 0.15s ease;
+    }
+
+    .promo-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17, 17, 17, 0.82) 0%, rgba(17, 17, 17, 0.94) 100%);
+      z-index: -1;
+    }
+
+    .promo-box:hover::before, .promo-box:focus-within::before {
+      transform: scale(1.03);
+    }
+
+    .promo-box h3 {
+      font-size: 17px;
+      font-weight: 900;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .promo-box p {
+      font-size: 12px;
+      color: #D1D5DB;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .ai-action-focus {
+      animation: autonomousPulse 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+      position: relative;
+      z-index: 50;
+    }
+
+    @keyframes autonomousPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 205, 0, 0.95);
+        border-color: #FFCD00;
+        transform: scale(1.01);
+      }
+      30% {
+        box-shadow: 0 0 0 10px rgba(255, 205, 0, 0.35);
+        border-color: #FFCD00;
+      }
+      100% {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        border-color: var(--border-color);
+        transform: scale(1);
+      }
+    }
+
+    .ai-chat-window {
+      position: fixed;
+      bottom: 84px;
+      right: 24px;
+      width: min(410px, calc(100vw - 32px));
+      height: min(560px, calc(100vh - 120px));
+      background: var(--surface-card);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      animation: quickPop 0.1s ease-out;
+    }
+
+    @keyframes quickPop {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-header {
+      background: var(--cat-black);
+      color: #FFFFFF;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--cat-yellow);
+    }
+
+    .chat-header h3 {
+      font-size: 13px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--cat-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-header-mini {
+      background: transparent;
+      border: 1px solid #444;
+      color: #CCC;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .btn-header-mini:hover, .btn-header-mini:focus-visible {
+      border-color: var(--cat-yellow);
+      color: var(--cat-yellow);
+    }
+
+    .chat-mode-bar {
+      background: var(--surface-elevated);
+      border-bottom: 1px solid var(--border-color);
+      padding: 6px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-wrap input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #D9A800;
+      width: 14px;
+      height: 14px;
+    }
+
+    .api-key-panel {
+      background: var(--api-panel-bg);
+      color: var(--api-panel-text);
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--api-panel-border);
+      font-size: 11px;
+    }
+
+    .api-key-panel input {
+      width: 100%;
+      padding: 5px 8px;
+      font-size: 11px;
+      margin-top: 3px;
+      background: var(--surface-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      font-family: monospace;
+      outline: none;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--surface-elevated);
+    }
+
+    .msg-wrap {
+      display: flex;
+      flex-direction: column;
+      max-width: 90%;
+    }
+
+    .msg-wrap.user { align-self: flex-end; }
+    .msg-wrap.bot { align-self: flex-start; }
+
+    .msg {
+      padding: 8px 12px;
+      border-radius: 4px;
+      word-wrap: break-word;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .msg.bot {
+      background: var(--chat-bot-bg);
+      color: var(--chat-bot-text);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--cat-yellow);
+    }
+
+    .msg.user {
+      background: var(--cat-black);
+      color: var(--cat-yellow);
+    }
+
+    .msg-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .btn-audio-speak {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .btn-audio-speak:hover, .btn-audio-speak:focus-visible {
+      color: var(--text-main);
+      border-color: var(--cat-yellow);
+    }
+
+    .btn-audio-speak.speaking {
+      color: #D9A800;
+      border-color: #D9A800;
+    }
+
+    .chat-input-area {
+      padding: 10px;
+      background: var(--surface-card);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 8px 10px;
+      background: var(--surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 13px;
+      outline: none;
+      font-weight: 500;
+    }
+
+    #magnifierLens {
+      position: fixed;
+      display: none;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 3px solid var(--cat-yellow);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45), inset 0 0 16px rgba(0,0,0,0.25);
+      pointer-events: none;
+      z-index: 99999;
+      overflow: hidden;
+      background-color: var(--surface-card);
+    }
+
+    #magnifierContent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 200000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: var(--surface-card);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      max-width: 520px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .modal-card h3 {
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      border-left: 4px solid var(--cat-yellow);
+      padding-left: 10px;
+      color: var(--text-accent);
+    }
+
+    .modal-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-close-btn {
+      background: var(--cat-yellow);
+      color: var(--cat-black);
+      border: none;
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 768px) {
+      .equipment-selector { grid-template-columns: 1fr; }
+      .copilot-inline-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cinematic High-Speed Intro Gateway -->
+  <div id="epicIntro">
+    <div class="blast-door door-left"></div>
+    <div class="blast-door door-right"></div>
+    <div class="speed-grid"></div>
+
+    <button class="btn-skip-intro" id="skipIntroBtn">SKIP INTRO [ESC]</button>
+
+    <div class="stage-content">
+      <div class="gear-station">
+        <svg class="gear-counter-left" viewBox="0 0 100 100" fill="none">
+          <path d="M50 35C41.7 35 35 41.7 35 50C35 58.3 41.7 65 50 65C58.3 65 65 58.3 65 50C65 41.7 58.3 35 50 35Z" fill="#B38F00"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M46 2H54V12.1C56.8 12.7 59.5 13.9 62 15.4L69.2 8.2L74.8 13.9L67.6 21.1C69.2 23.6 70.3 26.3 70.9 29.1H81.1V37.1H70.9C70.3 39.9 69.2 42.6 67.6 45.1L74.8 52.3L69.2 58L62 50.8C59.5 52.3 56.8 53.5 54 54.1V64.2H46V54.1C43.1 53.5 40.4 52.3 38 50.8L30.8 58L25.1 52.3L32.3 45.1C30.7 42.6 29.6 39.9 29 37.1H18.8V29.1H29C29.6 26.3 30.7 23.6 32.3 21.1L25.1 13.9L30.8 8.2L38 15.4C40.4 13.9 43.1 12.7 46 12.1V2ZM50 25C36.2 25 25 36.2 25 50C25 63.8 36.2 75 50 75C63.8 75 75 63.8 75 50C75 36.2 63.8 25 50 25Z" fill="#FFCD00"/>
+        </svg>
+
+        <svg class="gear-counter-right" viewBox="0 0 100 100" fill="none">
+          <path d="M50 35C41.7 35 35 41.7 35 50C35 58.3 41.7 65 50 65C58.3 65 65 58.3 65 50C65 41.7 58.3 35 50 35Z" fill="#997A00"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M46 2H54V12.1C56.8 12.7 59.5 13.9 62 15.4L69.2 8.2L74.8 13.9L67.6 21.1C69.2 23.6 70.3 26.3 70.9 29.1H81.1V37.1H70.9C70.3 39.9 69.2 42.6 67.6 45.1L74.8 52.3L69.2 58L62 50.8C59.5 52.3 56.8 53.5 54 54.1V64.2H46V54.1C43.1 53.5 40.4 52.3 38 50.8L30.8 58L25.1 52.3L32.3 45.1C30.7 42.6 29.6 39.9 29 37.1H18.8V29.1H29C29.6 26.3 30.7 23.6 32.3 21.1L25.1 13.9L30.8 8.2L38 15.4C40.4 13.9 43.1 12.7 46 12.1V2ZM50 25C36.2 25 25 36.2 25 50C25 63.8 36.2 75 50 75C63.8 75 75 63.8 75 50C75 36.2 63.8 25 50 25Z" fill="#E5B800"/>
+        </svg>
+
+        <svg class="gear-main" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#FFCD00" stroke-width="2" stroke-dasharray="4 4"/>
+          <path d="M50 35C41.7 35 35 41.7 35 50C35 58.3 41.7 65 50 65C58.3 65 65 58.3 65 50C65 41.7 58.3 35 50 35Z" fill="#111111"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M46 2H54V12.1C56.8 12.7 59.5 13.9 62 15.4L69.2 8.2L74.8 13.9L67.6 21.1C69.2 23.6 70.3 26.3 70.9 29.1H81.1V37.1H70.9C70.3 39.9 69.2 42.6 67.6 45.1L74.8 52.3L69.2 58L62 50.8C59.5 52.3 56.8 53.5 54 54.1V64.2H46V54.1C43.1 53.5 40.4 52.3 38 50.8L30.8 58L25.1 52.3L32.3 45.1C30.7 42.6 29.6 39.9 29 37.1H18.8V29.1H29C29.6 26.3 30.7 23.6 32.3 21.1L25.1 13.9L30.8 8.2L38 15.4C40.4 13.9 43.1 12.7 46 12.1V2ZM50 25C36.2 25 25 36.2 25 50C25 63.8 36.2 75 50 75C63.8 75 75 63.8 75 50C75 36.2 63.8 25 50 25Z" fill="#FFCD00"/>
+        </svg>
+
+        <div class="spark-ring"></div>
+        <div class="intro-cat-emblem">CAT</div>
+      </div>
+
+      <div class="hud-readout">
+        <div class="hud-title">INITIALIZING ENTERPRISE HYDRAULIC CORE</div>
+        <div class="hud-bar-frame">
+          <div class="hud-bar-fill" id="hudProgress"></div>
+        </div>
+        <div class="hud-stats">
+          <span id="rpmCounter">RPM: 0</span>
+          <span>PSI: 4850</span>
+          <span id="statusMessage">STATUS: ENGAGING</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Magnifier Floating Viewport -->
+  <div id="magnifierLens" aria-hidden="true">
+    <div id="magnifierContent"></div>
+  </div>
+
+  <!-- Functional Sublink Modal Dialog -->
+  <div class="modal-overlay" id="sublinkModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalBody" aria-hidden="true" data-state="closed">
+    <div class="modal-card">
+      <h3 id="modalTitle">Portal Direct</h3>
+      <p id="modalBody">Connecting to service...</p>
+      <button class="modal-close-btn" id="modalCloseBtn" tabindex="0">Close</button>
+    </div>
+  </div>
+
+  <div class="top-bar">
+    <div>CATERPILLAR INC. (NYSE: CAT) | GLOBAL CORPORATE DIRECTORY</div>
+    <div class="top-bar-right">
+      <a href="#investors" class="sublink-trigger" data-title="Investor Relations" data-desc="NYSE: CAT financial filings, annual reports, earnings calls, and shareholder dividend reinvestment plans." tabindex="0">Investors</a>
+      <a href="#sustainability" class="sublink-trigger" data-title="Sustainability &amp; ESG" data-desc="2030 Climate Goals, hydrogen and battery-electric heavy machine prototypes, and Cat Reman circular solutions." tabindex="0">Sustainability</a>
+      <a href="#careers" class="sublink-trigger" data-title="Global Careers" data-desc="Search worldwide openings across engineering, supply chain, software development, and modern manufacturing facilities." tabindex="0">Careers</a>
+      <a href="#dealers" class="sublink-trigger" data-title="Worldwide Dealer Network" data-desc="Connect with 150+ independent global Cat dealers across 190 countries for fleet servicing and equipment support." tabindex="0">Dealer Network</a>
+      <button class="btn-bg-img btn-magnifier-toggle" id="magnifierToggle" aria-label="Toggle Magnifier" title="Inspect Blueprints, Photos, and Small Specs [Press 'M']" tabindex="0">
+        <span class="btn-label" id="magnifierLabel">🔍 Magnifier: Off</span>
+      </button>
+      <button class="btn-bg-img btn-theme-toggle" id="themeToggle" aria-label="Toggle Theme" title="Toggle Light/Dark Theme [Press 'T']" tabindex="0">
+        <span class="btn-label" id="themeLabel">🌙 Dark Mode</span>
+      </button>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <div class="cat-badge" aria-hidden="true">CAT</div>
+      <div class="brand-title">Caterpillar Inc.</div>
+    </div>
+
+    <form class="search-wrapper" id="globalSearchForm" role="search" aria-label="Catalog search" action="" method="get" data-state="idle">
+      <input type="text" name="q" class="search-input" id="globalSearchInput" placeholder="Search Caterpillar global businesses, ESG, investors, or machines..." aria-label="Search catalog" tabindex="0">
+      <button type="submit" class="btn-search-solid" id="globalSearchBtn" aria-label="Submit search" tabindex="0">
+        🔍 Search
+      </button>
+    </form>
+
+    <div class="nav-actions">
+      <a href="#products" class="sublink-trigger" data-title="Equipment &amp; Products" data-desc="Explore over 300 heavy machines across construction, resource, mining, and forestry applications." tabindex="0">Products</a>
+      <a href="#industries" class="sublink-trigger" data-title="Global Industries" data-desc="Discover how Caterpillar solutions power infrastructure, resource extraction, marine freight, and electric power grids." tabindex="0">Industries</a>
+      <a href="#company" class="sublink-trigger" data-title="Corporate Governance" data-desc="Review company history, leadership profiles, corporate governance standards, and global ethics commitments." tabindex="0">Company</a>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+
+    <div class="hero-accent" id="sec-hero">
+      <div class="hero-content">
+        <h1>Building a Better, More <span>Sustainable World</span>.</h1>
+        <p>Caterpillar is the world's leading manufacturer of construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives.</p>
+      </div>
+    </div>
+
+    <form class="equipment-selector" id="sec-selector" role="search" aria-label="Enterprise Segment Selector" action="" method="get" data-state="idle">
+      <div class="select-group">
+        <label for="indSegment">Business Segment</label>
+        <select id="indSegment" name="family" tabindex="0">
+          <option>Construction Industries (Infrastructure, Earthmoving)</option>
+          <option>Resource Industries (Surface &amp; Underground Mining)</option>
+          <option>Energy &amp; Transportation (Power, Marine, Rail, Oil)</option>
+          <option>Cat Financial &amp; Global Services</option>
+          <option>Sustainability, Electric Power &amp; Autonomy</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="eqTopic">Focus or Equipment Line</label>
+        <input type="text" id="eqTopic" name="model" placeholder="e.g. Battery Electric 793, Dynamic Gas Blending" tabindex="0">
+      </div>
+
+      <div class="select-group">
+        <label for="eqRegion">Global Operations</label>
+        <input type="text" id="eqRegion" name="serial" placeholder="North America, EAME, Asia Pacific" tabindex="0">
+      </div>
+
+      <button type="submit" class="btn-bg-img btn-filter" id="applyFilterBtn" tabindex="0">
+        <span class="btn-label">⚡ Explore Sector</span>
+      </button>
+    </form>
+
+    <div class="copilot-inline-banner" id="sec-copilot">
+      <div class="banner-text">
+        <h3>Caterpillar Enterprise Copilot</h3>
+        <p>Inquire about corporate strategy, 2030 sustainability goals, Cat Reman, financial services, or investor facts.</p>
+      </div>
+      <div class="quick-chips">
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Corporate 2030 Sustainability Targets" tabindex="0">
+          <span class="btn-label">🌱 2030 ESG Goals</span>
+        </button>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Autonomous Mining Cat Command" tabindex="0">
+          <span class="btn-label">🤖 Cat® Command</span>
+        </button>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Financial Services &amp; Commercial Leasing" tabindex="0">
+          <span class="btn-label">💼 Cat Financial</span>
+        </button>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Cat Reman Lifecycle Economy" tabindex="0">
+          <span class="btn-label">♻️ Circular Reman</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="section-header" id="sec-systems">
+      <h2 class="section-title">Explore Caterpillar Global Operations (12 Strategic Pillars)</h2>
+    </div>
+
+    <!-- 12 Enterprise Pillars with Photographic Backing and Badges -->
+    <div class="category-grid" role="group" aria-label="12 Strategic Pillars">
+      <button type="button" class="cat-card card-construction contextual-trigger" id="card-construction" data-context="Construction Industries" data-agent-action="explain_topic">
+        <span class="cat-badge-code">SEG-01</span>
+        <span class="cat-name">Construction</span>
+        <span class="cat-sub">Excavators, dozers, and infrastructure machinery.</span>
+      </button>
+
+      <button type="button" class="cat-card card-mining contextual-trigger" id="card-mining" data-context="Resource &amp; Mining Industries" data-agent-action="explain_topic">
+        <span class="cat-badge-code">SEG-02</span>
+        <span class="cat-name">Resource Industries</span>
+        <span class="cat-sub">Surface haul trucks, drills, and underground loaders.</span>
+      </button>
+
+      <button type="button" class="cat-card card-energy contextual-trigger" id="card-energy" data-context="Energy &amp; Transportation" data-agent-action="explain_topic">
+        <span class="cat-badge-code">SEG-03</span>
+        <span class="cat-name">Energy &amp; Power</span>
+        <span class="cat-sub">Solar Turbines, marine power, and Progress Rail locomotives.</span>
+      </button>
+
+      <button type="button" class="cat-card card-sustainability contextual-trigger" id="card-sustainability" data-context="Sustainability &amp; Hydrogen Fuel" data-agent-action="explain_topic">
+        <span class="cat-badge-code">ESG-04</span>
+        <span class="cat-name">Sustainability</span>
+        <span class="cat-sub">Zero-emissions battery fleets, hydrogen, and microgrids.</span>
+      </button>
+
+      <button type="button" class="cat-card card-technology contextual-trigger" id="card-technology" data-context="Cat Digital &amp; Autonomous Command" data-agent-action="explain_topic">
+        <span class="cat-badge-code">TECH-05</span>
+        <span class="cat-name">Cat® Digital</span>
+        <span class="cat-sub">Connected assets, telematics, and autonomous haulage.</span>
+      </button>
+
+      <button type="button" class="cat-card card-financial contextual-trigger" id="card-financial" data-context="Cat Financial Products" data-agent-action="explain_topic">
+        <span class="cat-badge-code">FIN-06</span>
+        <span class="cat-name">Cat Financial</span>
+        <span class="cat-sub">Equipment financing, commercial leasing, and credit protection.</span>
+      </button>
+
+      <button type="button" class="cat-card card-reman contextual-trigger" id="card-reman" data-context="Remanufacturing &amp; Circular Economy" data-agent-action="explain_topic">
+        <span class="cat-badge-code">CIRC-07</span>
+        <span class="cat-name">Cat Reman</span>
+        <span class="cat-sub">Circular business models recycling 125M+ lbs of material yearly.</span>
+      </button>
+
+      <button type="button" class="cat-card card-careers contextual-trigger" id="card-careers" data-context="Careers at Caterpillar" data-agent-action="explain_topic">
+        <span class="cat-badge-code">HR-08</span>
+        <span class="cat-name">Global Careers</span>
+        <span class="cat-sub">Engineering, supply chain, software, and manufacturing jobs.</span>
+      </button>
+
+      <button type="button" class="cat-card card-dealers contextual-trigger" id="card-dealers" data-context="Worldwide Cat Dealer Network" data-agent-action="explain_topic">
+        <span class="cat-badge-code">NET-09</span>
+        <span class="cat-name">Dealer Network</span>
+        <span class="cat-sub">150+ independent global dealers operating across 190 countries.</span>
+      </button>
+
+      <button type="button" class="cat-card card-innovation contextual-trigger" id="card-innovation" data-context="R&amp;D and Autonomous Technology" data-agent-action="explain_topic">
+        <span class="cat-badge-code">R&amp;D-10</span>
+        <span class="cat-name">Innovation &amp; R&amp;D</span>
+        <span class="cat-sub">Over $1.5B invested annually in research and electrification.</span>
+      </button>
+
+      <button type="button" class="cat-card card-history contextual-trigger" id="card-history" data-context="Caterpillar Heritage &amp; History" data-agent-action="explain_topic">
+        <span class="cat-badge-code">HIST-11</span>
+        <span class="cat-name">100-Year Heritage</span>
+        <span class="cat-sub">Pioneering track-type tractors since the 1925 merger.</span>
+      </button>
+
+      <button type="button" class="cat-card card-investors contextual-trigger" id="card-investors" data-context="Investor Relations &amp; Shareholder Info" data-agent-action="explain_topic">
+        <span class="cat-badge-code">INV-12</span>
+        <span class="cat-name">Investor Relations</span>
+        <span class="cat-sub">Quarterly results, annual reports, and dividend governance.</span>
+      </button>
+    </div>
+
+    <!-- Strategic Highlights -->
+    <div class="section-header" id="sec-consumables">
+      <h2 class="section-title">Corporate Highlights &amp; Enterprise Programs</h2>
+    </div>
+
+    <div class="deals-grid">
+      <div class="deal-card" id="deal-1">
+        <div class="deal-photo" style="background-image: var(--img-cat-investor);">
+          <span class="deal-badge">Investor Focus</span>
+        </div>
+        <div class="deal-body">
+          <div>
+            <div class="deal-sku">NYSE: CAT</div>
+            <div class="deal-title">Global Enterprise Financial Strength</div>
+            <p style="font-size: 11px; color: var(--text-muted);">Decades of dividend growth backed by strong cash flow across heavy industrial cycles.</p>
+          </div>
+          <div class="deal-foot">
+            <div class="deal-price">S&amp;P 100 / Dow 30</div>
+            <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Investor Relations &amp; Dividend History" tabindex="0">
+              <span class="btn-label">Explain</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="deal-card" id="deal-2">
+        <div class="deal-photo" style="background-image: var(--img-cat-digital);">
+          <span class="deal-badge">Automation</span>
+        </div>
+        <div class="deal-body">
+          <div>
+            <div class="deal-sku">Cat® Command</div>
+            <div class="deal-title">Autonomous Mining Haulage System</div>
+            <p style="font-size: 11px; color: var(--text-muted);">Over 600 autonomous trucks operating globally with billions of tons safely hauled.</p>
+          </div>
+          <div class="deal-foot">
+            <div class="deal-price">Zero Lost Time</div>
+            <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Cat Command Autonomous Haulage" tabindex="0">
+              <span class="btn-label">Explain</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="deal-card" id="deal-3">
+        <div class="deal-photo" style="background-image: var(--img-cat-reman);">
+          <span class="deal-badge">Sustainability</span>
+        </div>
+        <div class="deal-body">
+          <div>
+            <div class="deal-sku">Cat Reman</div>
+            <div class="deal-title">Circular Economy Manufacturing</div>
+            <p style="font-size: 11px; color: var(--text-muted);">Returning end-of-life components to same-as-new condition with 85% less energy used.</p>
+          </div>
+          <div class="deal-foot">
+            <div class="deal-price">125M+ lbs Reclaimed</div>
+            <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Cat Reman Remanufacturing Process" tabindex="0">
+              <span class="btn-label">Explain</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="deal-card" id="deal-4">
+        <div class="deal-photo" style="background-image: var(--img-cat-financial);">
+          <span class="deal-badge">Global Services</span>
+        </div>
+        <div class="deal-body">
+          <div>
+            <div class="deal-sku">Financial Services</div>
+            <div class="deal-title">Cat Financial Commercial Solutions</div>
+            <p style="font-size: 11px; color: var(--text-muted);">Serving commercial customers and authorized dealers with tailored heavy equipment funding.</p>
+          </div>
+          <div class="deal-foot">
+            <div class="deal-price">Global Coverage</div>
+            <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Cat Financial Global Programs" tabindex="0">
+              <span class="btn-label">Explain</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corporate Programs -->
+    <div class="promo-row" id="sec-programs">
+      <div class="promo-box" id="promo-esg" style="background-image: var(--img-excavator-wide);">
+        <div>
+          <h3>Sustainability &amp; ESG Leadership</h3>
+          <p>Targeting 100% of new Cat products to be more sustainable than the previous generation, from electric machines to hydrogen fuel cells.</p>
+        </div>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Caterpillar 2030 Sustainability Goals" tabindex="0">
+          <span class="btn-label">Explain ESG Report &rarr;</span>
+        </button>
+      </div>
+
+      <div class="promo-box" id="promo-dealers" style="background-image: var(--img-track-loader-963);">
+        <div>
+          <h3>The Cat Dealer Advantage</h3>
+          <p>A global network of dedicated dealers offering round-the-clock machine servicing, genuine reman components, and jobsite telemetry.</p>
+        </div>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Cat Global Dealer Network" tabindex="0">
+          <span class="btn-label">Explain Network &rarr;</span>
+        </button>
+      </div>
+
+      <div class="promo-box" id="promo-foundation" style="background-image: var(--img-excavator-quarry);">
+        <div>
+          <h3>Caterpillar Foundation</h3>
+          <p>Investing in environmental resilience, STEM education, workforce readiness, and disaster relief across communities worldwide.</p>
+        </div>
+        <button class="btn-bg-img btn-quick-ask contextual-trigger" data-context="Caterpillar Foundation Community Impact" tabindex="0">
+          <span class="btn-label">Explain Grants &rarr;</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Visually hidden machine-readable state regions -->
+    <section id="searchResults" class="sr-only" aria-label="Search results" data-state="idle" data-source="" data-query="" data-count="0"></section>
+    <div id="agentStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-state="idle" data-last-action=""></div>
+
+  </main>
+
+  <button class="btn-bg-img ai-chat-toggle" id="toggleChat" aria-controls="chatWindow" aria-expanded="false" aria-label="Open Caterpillar Corporate Copilot [Press 'C']" tabindex="0">
+    <span class="btn-label">💬 Cat Corporate Copilot</span>
+  </button>
+
+  <div class="ai-chat-window" id="chatWindow" role="dialog" aria-label="Caterpillar Corporate Copilot" data-state="idle" data-open="false">
+    <div class="chat-header">
+      <h3><span>⚡</span> Caterpillar Corporate Copilot</h3>
+      <div class="chat-header-actions">
+        <button class="btn-header-mini" id="clearChatBtn" title="Clear Chat Logs" tabindex="0">Clear</button>
+        <button class="btn-header-mini" id="closeChat" aria-label="Close Chat [Press Esc]" tabindex="0">&times;</button>
+      </div>
+    </div>
+
+    <div class="chat-mode-bar">
+      <label class="toggle-wrap" title="Read responses aloud via Text-to-Speech">
+        <input type="checkbox" id="autoTtsToggle" tabindex="0">
+        <span>Auto-TTS 🔊</span>
+      </label>
+    </div>
+
+    <div class="api-key-panel">
+      <label for="apiKey" style="font-weight: 900; display: block;">OpenAI API Key (Session Only):</label>
+      <input type="password" id="apiKey" placeholder="sk-proj-..." autocomplete="off" tabindex="0">
+    </div>
+
+    <div class="chat-messages" id="chatLogs" tabindex="0" role="log">
+      <div class="msg-wrap bot">
+        <div class="msg bot">
+          Welcome to Caterpillar Inc. Ask about our global business segments, sustainability commitments, technology, Cat Financial, or our dealer network.
+        </div>
+        <div class="msg-actions">
+          <button class="btn-audio-speak" onclick="speakText(this.parentElement.previousElementSibling.textContent)" tabindex="0">🔊 Listen</button>
+        </div>
+      </div>
+    </div>
+
+    <form class="chat-input-area" id="chatForm">
+      <input type="text" id="userInput" placeholder="Ask about Caterpillar strategy, sectors, or ESG..." required tabindex="0">
+      <button type="button" class="btn-bg-img btn-chat-mic" id="sttMicBtn" title="Speak to input question (STT) [Press Alt+M]" tabindex="0">
+        <span class="btn-label" id="sttMicIcon">🎙️</span>
+      </button>
+      <button type="submit" class="btn-bg-img btn-chat-send" tabindex="0">
+        <span class="btn-label">Send</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- TASK 2: Agent Tool Manifest -->
+  <script type="application/json" id="agent-tools">
+  {
+    "schema_version": "1.2",
+    "name": "Caterpillar Inc. Global Portal (Agent Engine)",
+    "description": "Single-page Caterpillar enterprise portal demo. Agents can read structured data, search corporate segments, configure sector filters, and query explanatory overviews without navigating away.",
+    "how_to_use": {
+      "skip_intro": "Load the page with ?agent or ?nointro. The intro is also skipped automatically when navigator.webdriver is true or prefers-reduced-motion is set.",
+      "ready_signal": "Wait for <html data-agent-ready=\"true\"> (or the catagent:ready window event) before calling window.catAgent.",
+      "js_api": "await window.catAgent.call(toolName, args), or the named helpers: listTools(), getState(), getCatalog(), searchParts(query), setEquipmentFilter(args), explain(args), askCopilot(question).",
+      "url_parameters": "?q=<text> runs a search on load. ?family=<keyword>&model=<text>&serial=<text> pre-fills the enterprise selector. ?agent skips the intro.",
+      "state_signals": "Actions update data-state on #globalSearchForm, #sec-selector, #searchResults, #chatWindow and #sublinkModal. The visually hidden #agentStatus live region announces each result.",
+      "structured_data": "Metadata sits in <script type=\"application/ld+json\" id=\"catalog-jsonld\">.",
+      "stable_selectors": "Every element has a stable id (#card-construction, #deal-1, #promo-esg, etc.)."
+    },
+    "tools": [
+      {
+        "name": "get_state",
+        "description": "Return the current UI state: intro status, search query, filter values, chat open/state, modal status, and last action.",
+        "requires_api_key": false,
+        "input_schema": { "type": "object", "properties": {}, "additionalProperties": false }
+      },
+      {
+        "name": "get_catalog",
+        "description": "Return everything on the page as JSON: structured enterprise highlights, the 12 corporate operating pillars, programs, and list of business segments. No API key needed.",
+        "requires_api_key": false,
+        "input_schema": { "type": "object", "properties": {}, "additionalProperties": false }
+      },
+      {
+        "name": "search_parts",
+        "description": "Keyword search over corporate pillars, highlights, programs, and segments on this page (matches code, name, description, context). Fills the search box, renders results to #searchResults, and updates ?q= in the URL. No API key needed.",
+        "requires_api_key": false,
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "query": { "type": "string", "description": "Search keyword, sector name, or ticker, e.g., 'CAT', 'autonomous', 'sustainability', 'mining'." }
+          },
+          "required": ["query"],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "set_equipment_filter",
+        "description": "Set the Enterprise Segment Selector fields (segment family, focus line, region), write them to URL, and return matching highlights. No API key needed.",
+        "requires_api_key": false,
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "family": { "type": "string", "description": "Keyword matching segment options: 'Construction', 'Resource', 'Energy', 'Financial', 'Sustainability'." },
+            "model": { "type": "string", "description": "Focus or equipment line." },
+            "serial": { "type": "string", "description": "Global region." }
+          },
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "explain_topic",
+        "description": "Explains a corporate pillar, program, or segment in the chat copilot instead of navigating the viewport. Submits an explanatory prompt and highlights the reference card.",
+        "requires_api_key": false,
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "targetId": {
+              "type": "string",
+              "description": "Target element DOM id to explain.",
+              "enum": [
+                "card-construction", "card-mining", "card-energy", "card-sustainability",
+                "card-technology", "card-financial", "card-reman", "card-careers",
+                "card-dealers", "card-innovation", "card-history", "card-investors",
+                "deal-1", "deal-2", "deal-3", "deal-4",
+                "promo-esg", "promo-dealers", "promo-foundation", "sec-selector",
+                "sec-consumables", "sec-systems", "sec-hero"
+              ]
+            },
+            "context": { "type": "string", "description": "Topic or context to explain." }
+          },
+          "required": ["targetId"],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "ask_copilot",
+        "description": "Send a question to the in-page Caterpillar Corporate Copilot chat and return its reply.",
+        "requires_api_key": false,
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "question": { "type": "string" }
+          },
+          "required": ["question"],
+          "additionalProperties": false
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    const OPENAI_API_KEY = "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";
+    const agentManifest = JSON.parse(document.getElementById('agent-tools').textContent);
+
+    function announce(action, state, message, detail = {}, silent = false) {
+      const statusEl = document.getElementById('agentStatus');
+      if (statusEl) {
+        statusEl.dataset.lastAction = action;
+        statusEl.dataset.state = state;
+        if (!silent && message) statusEl.textContent = message;
+      }
+      document.documentElement.dataset.lastAction = action;
+      document.documentElement.dataset.lastActionState = state;
+      window.dispatchEvent(new CustomEvent('catagent:state', { detail: { action, state, message, ...detail } }));
+    }
+
+    // ==========================================================================
+    // CINEMATIC INTRO CONTROLLER (GEARS & TACHOMETER HUD)
+    // ==========================================================================
+    const introEl = document.getElementById('epicIntro');
+    const hudProgress = document.getElementById('hudProgress');
+    const rpmCounter = document.getElementById('rpmCounter');
+    const statusMessage = document.getElementById('statusMessage');
+    const skipIntroBtn = document.getElementById('skipIntroBtn');
+
+    let currentRPM = 0;
+    let progressPct = 0;
+    let introFinished = false;
+
+    function finishIntroAnimation() {
+      if (introFinished) return;
+      introFinished = true;
+      introEl.classList.add('hydraulics-firing');
+      
+      setTimeout(() => {
+        introEl.classList.add('split-open');
+        setTimeout(() => {
+          introEl.classList.add('dismissed');
+          introEl.setAttribute('aria-hidden', 'true');
+          document.documentElement.dataset.introDone = 'true';
+        }, 1150);
+      }, 350);
+    }
+
+    skipIntroBtn.addEventListener('click', finishIntroAnimation);
+
+    const introSkipped = document.documentElement.classList.contains('no-intro');
+    if (introSkipped) {
+      introFinished = true;
+      introEl.classList.add('dismissed');
+      introEl.setAttribute('aria-hidden', 'true');
+      document.documentElement.dataset.introDone = 'true';
+    }
+
+    const introInterval = introSkipped ? null : setInterval(() => {
+      progressPct += 2;
+      currentRPM += Math.floor(Math.random() * 45) + 35;
+      
+      if (currentRPM > 2200) currentRPM = 2200;
+      if (progressPct > 100) progressPct = 100;
+
+      hudProgress.style.width = `${progressPct}%`;
+      rpmCounter.textContent = `RPM: ${currentRPM}`;
+
+      if (progressPct > 35 && progressPct < 75) {
+        statusMessage.textContent = 'STATUS: LOCKING SPLINES';
+      } else if (progressPct >= 75) {
+        statusMessage.textContent = 'STATUS: HYDRAULICS PRIMED';
+      }
+
+      if (progressPct >= 100) {
+        clearInterval(introInterval);
+        setTimeout(finishIntroAnimation, 250);
+      }
+    }, 28);
+
+    // Modal Controller
+    const sublinkModal = document.getElementById('sublinkModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function openSublinkModal(title, desc) {
+      modalTitle.textContent = title;
+      modalBody.textContent = desc;
+      sublinkModal.style.display = 'flex';
+      sublinkModal.dataset.state = 'open';
+      sublinkModal.setAttribute('aria-hidden', 'false');
+      modalCloseBtn.focus();
+      announce('modal', 'open', `${title} dialog opened.`, { title });
+    }
+
+    function closeSublinkModal() {
+      if (sublinkModal.dataset.state === 'closed') return;
+      sublinkModal.style.display = 'none';
+      sublinkModal.dataset.state = 'closed';
+      sublinkModal.setAttribute('aria-hidden', 'true');
+      announce('modal', 'closed', 'Dialog closed.');
+    }
+
+    document.querySelectorAll('.sublink-trigger').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSublinkModal(link.getAttribute('data-title'), link.getAttribute('data-desc'));
+      });
+    });
+
+    modalCloseBtn.addEventListener('click', closeSublinkModal);
+    sublinkModal.addEventListener('click', (e) => {
+      if (e.target === sublinkModal) closeSublinkModal();
+    });
+
+    // ==========================================================================
+    // EXPLAIN CONTROLLER (In-place Explanation)
+    // ==========================================================================
+    let lastUserQueryTopic = "";
+
+    function explainTopic(topicOrTargetId, optionalContext = "") {
+      const el = document.getElementById(topicOrTargetId);
+      const title = optionalContext || (el ? (el.dataset.context || el.querySelector('.cat-name, .deal-title, h3')?.textContent.trim()) : topicOrTargetId);
+      
+      if (el) {
+        el.classList.remove('ai-action-focus');
+        void el.offsetWidth;
+        el.classList.add('ai-action-focus');
+        setTimeout(() => el.classList.remove('ai-action-focus'), 2000);
+      }
+
+      let generatedPrompt = "";
+      if (lastUserQueryTopic) {
+        generatedPrompt = `Explain ${title} in detail regarding its role in Caterpillar's strategy, technical systems, and customer impact. Connect it briefly to our prior topic (${lastUserQueryTopic}).`;
+      } else {
+        generatedPrompt = `Explain ${title}: Provide an authoritative summary of Caterpillar's operations, technology, and industry specifications for this area.`;
+      }
+
+      userInput.value = generatedPrompt;
+      if (chatWindow.style.display !== 'flex') toggleChatWindow();
+      announce('explain', 'loading', `Explaining ${title}...`, { topic: title, targetId: topicOrTargetId });
+      return sendQueryToOpenAI(generatedPrompt);
+    }
+
+    document.querySelectorAll('.contextual-trigger').forEach(el => {
+      el.addEventListener('click', () => {
+        const context = el.getAttribute('data-context');
+        explainTopic(el.id || context, context);
+      });
+    });
+
+    // Global Keyboard Navigation
+    window.addEventListener('keydown', (e) => {
+      const inInput = ['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName);
+
+      if (e.key === 'Escape') {
+        if (!introFinished) finishIntroAnimation();
+        if (sublinkModal.style.display === 'flex') closeSublinkModal();
+        if (chatWindow.style.display === 'flex') {
+          chatWindow.style.display = 'none';
+          toggleBtn.focus();
+        }
+        if (magnifierActive) setMagnifier(false);
+      }
+
+      if (!inInput) {
+        if (e.key === '/' || e.key === 's') {
+          e.preventDefault();
+          document.getElementById('globalSearchInput').focus();
+        } else if (e.key === 'c' || e.key === 'C') {
+          e.preventDefault();
+          toggleChatWindow();
+        } else if (e.key === 'm' || e.key === 'M') {
+          e.preventDefault();
+          setMagnifier(!magnifierActive);
+        } else if (e.key === 't' || e.key === 'T') {
+          e.preventDefault();
+          toggleTheme();
+        }
+      }
+    });
+
+    // Theme Controller
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('cat_dense_theme', theme);
+      themeLabel.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    const savedTheme = localStorage.getItem('cat_dense_theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Magnifier Controller
+    const magnifierToggle = document.getElementById('magnifierToggle');
+    const magnifierLabel = document.getElementById('magnifierLabel');
+    const magnifierLens = document.getElementById('magnifierLens');
+    const magnifierContent = document.getElementById('magnifierContent');
+    let magnifierActive = false;
+    const zoomLevel = 2.0;
+
+    function setMagnifier(active) {
+      magnifierActive = active;
+      document.body.classList.toggle('magnifier-active', active);
+      magnifierToggle.classList.toggle('active', active);
+      magnifierLabel.textContent = active ? '🔍 Magnifier: On' : '🔍 Magnifier: Off';
+      magnifierLens.style.display = active ? 'block' : 'none';
+
+      if (active) {
+        updateMagnifierClone();
+      } else {
+        magnifierContent.innerHTML = '';
+      }
+    }
+
+    function updateMagnifierClone() {
+      if (!magnifierActive) return;
+      magnifierContent.innerHTML = '';
+      const clone = document.body.cloneNode(true);
+      ['#magnifierLens', '#epicIntro', '#sublinkModal', '#chatWindow', '#toggleChat'].forEach(id => {
+        const el = clone.querySelector(id);
+        if (el) el.remove();
+      });
+
+      magnifierContent.appendChild(clone);
+      magnifierContent.style.width = document.documentElement.scrollWidth + 'px';
+      magnifierContent.style.height = document.documentElement.scrollHeight + 'px';
+      magnifierContent.style.transform = `scale(${zoomLevel})`;
+    }
+
+    magnifierToggle.addEventListener('click', () => setMagnifier(!magnifierActive));
+    window.addEventListener('resize', () => { if (magnifierActive) updateMagnifierClone(); });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!magnifierActive) return;
+      const lensRadius = 90;
+      magnifierLens.style.left = `${e.clientX - lensRadius}px`;
+      magnifierLens.style.top = `${e.clientY - lensRadius}px`;
+      magnifierContent.style.left = `${-(e.pageX * zoomLevel - lensRadius)}px`;
+      magnifierContent.style.top = `${-(e.pageY * zoomLevel - lensRadius)}px`;
+    });
+
+    // TTS Voice Synthesizer
+    const autoTtsToggle = document.getElementById('autoTtsToggle');
+
+    function cleanForSpeech(rawText) {
+      return rawText.replace(/[*_#`~[\]]/g, '').replace(/https?:\/\/\S+/g, '').trim();
+    }
+
+    function speakText(text, btnElement) {
+      if (!('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+      if (btnElement && btnElement.classList.contains('speaking')) {
+        btnElement.classList.remove('speaking');
+        btnElement.textContent = '🔊 Listen';
+        return;
+      }
+
+      document.querySelectorAll('.btn-audio-speak').forEach(b => {
+        b.classList.remove('speaking');
+        b.textContent = '🔊 Listen';
+      });
+
+      const clean = cleanForSpeech(text);
+      if (!clean) return;
+
+      const utterance = new SpeechSynthesisUtterance(clean);
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(v => (v.name.includes('Natural') || v.name.includes('Google')) && v.lang.startsWith('en'));
+      if (preferred) utterance.voice = preferred;
+
+      if (btnElement) {
+        btnElement.classList.add('speaking');
+        btnElement.textContent = '⏹️ Stop';
+      }
+
+      utterance.onend = utterance.onerror = () => {
+        if (btnElement) {
+          btnElement.classList.remove('speaking');
+          btnElement.textContent = '🔊 Listen';
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // STT Recognition Engine
+    const sttMicBtn = document.getElementById('sttMicBtn');
+    const sttMicIcon = document.getElementById('sttMicIcon');
+    const userInput = document.getElementById('userInput');
+    let recognition = null;
+    let isRecording = false;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        isRecording = true;
+        sttMicBtn.classList.add('recording');
+        sttMicIcon.textContent = '🔴';
+        userInput.placeholder = 'Listening for inquiry...';
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        if (transcript) {
+          userInput.value = transcript;
+          sendQueryToOpenAI(transcript);
+        }
+      };
+
+      recognition.onerror = recognition.onend = () => {
+        isRecording = false;
+        sttMicBtn.classList.remove('recording');
+        sttMicIcon.textContent = '🎙️';
+        userInput.placeholder = 'Ask about Caterpillar strategy, sectors, or ESG...';
+      };
+    }
+
+    sttMicBtn.addEventListener('click', () => {
+      if (!recognition) return;
+      if (isRecording) {
+        recognition.stop();
+      } else {
+        window.speechSynthesis.cancel();
+        try { recognition.start(); } catch (err) { recognition.stop(); }
+      }
+    });
+
+    // Chat Drawer Setup
+    const toggleBtn = document.getElementById('toggleChat');
+    const closeBtn = document.getElementById('closeChat');
+    const clearChatBtn = document.getElementById('clearChatBtn');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatForm = document.getElementById('chatForm');
+    const chatLogs = document.getElementById('chatLogs');
+    const apiKeyInput = document.getElementById('apiKey');
+
+    apiKeyInput.value = sessionStorage.getItem('cat_openai_key') || OPENAI_API_KEY;
+    apiKeyInput.addEventListener('input', () => {
+      sessionStorage.setItem('cat_openai_key', apiKeyInput.value.trim());
+    });
+
+    function toggleChatWindow() {
+      const isVisible = chatWindow.style.display === 'flex';
+      chatWindow.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible) userInput.focus();
+    }
+
+    toggleBtn.addEventListener('click', toggleChatWindow);
+    closeBtn.addEventListener('click', () => {
+      chatWindow.style.display = 'none';
+      window.speechSynthesis.cancel();
+      toggleBtn.focus();
+    });
+
+    function appendMessage(role, text) {
+      const wrap = document.createElement('div');
+      wrap.className = `msg-wrap ${role}`;
+
+      const el = document.createElement('div');
+      el.className = `msg ${role}`;
+      el.textContent = text;
+      wrap.appendChild(el);
+
+      if (role === 'bot') {
+        const actions = document.createElement('div');
+        actions.className = 'msg-actions';
+        const ttsBtn = document.createElement('button');
+        ttsBtn.className = 'btn-audio-speak';
+        ttsBtn.textContent = '🔊 Listen';
+        ttsBtn.tabIndex = 0;
+        ttsBtn.onclick = function() { speakText(text, this); };
+        actions.appendChild(ttsBtn);
+        wrap.appendChild(actions);
+      }
+
+      chatLogs.appendChild(wrap);
+      chatLogs.scrollTop = chatLogs.scrollHeight;
+      return el;
+    }
+
+    let copilotProxyCheck = null;
+
+    function detectCopilotProxy() {
+      if (!/^https?:$/.test(location.protocol)) return Promise.resolve(false);
+      if (!copilotProxyCheck) {
+        copilotProxyCheck = fetch('/api/health', { cache: 'no-store' })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((j) => Boolean(j && j.chat))
+          .catch(() => false);
+      }
+      return copilotProxyCheck;
+    }
+
+    detectCopilotProxy().then((ok) => {
+      document.documentElement.dataset.copilotProxy = ok ? 'available' : 'unavailable';
+    });
+
+    function postChatCompletion(body, key) {
+      const headers = { 'Content-Type': 'application/json' };
+      if (key) headers['Authorization'] = `Bearer ${key}`;
+      return fetch(key ? 'https://api.openai.com/v1/chat/completions' : '/api/chat', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+      });
+    }
+
+    function setChatState(state, message) {
+      chatWindow.dataset.state = state;
+      chatLogs.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+      const silent = !(state === 'needs-key' || state === 'error');
+      announce('copilot', state, message || '', {}, silent);
+    }
+
+    function syncChatOpenState() {
+      const open = chatWindow.style.display === 'flex';
+      chatWindow.dataset.open = String(open);
+      toggleBtn.setAttribute('aria-expanded', String(open));
+    }
+    new MutationObserver(syncChatOpenState).observe(chatWindow, { attributes: true, attributeFilter: ['style'] });
+    syncChatOpenState();
+
+    let chatConversation = [
+      {
+        role: 'system',
+        content: `You are the onboard Caterpillar Corporate Copilot strictly bound to this portal instance.
+- Refer ONLY to the corporate sectors, pillars, highlights, NYSE data, sustainability goals, and dealer programs visible on this local webpage.
+- Explain the significance, operations, and impact of items in detail directly in your response text.
+- Do NOT issue or request tool/function calls; answer directly in clear natural language.
+- Keep answers authoritative, informative, and structured (2-3 concise paragraphs or clean bullet points).`
+      }
+    ];
+
+    async function sendQueryToOpenAI(promptText) {
+      const key = apiKeyInput.value.trim() || OPENAI_API_KEY;
+      const useProxy = !key && await detectCopilotProxy();
+
+      if (!key && !useProxy) {
+        appendMessage('bot', '⚠️ Provide an OpenAI API key in the field above.');
+        if (chatWindow.style.display !== 'flex') chatWindow.style.display = 'flex';
+        apiKeyInput.focus();
+        setChatState('needs-key', 'Copilot needs an OpenAI key in the chat panel or the server.js proxy.');
+        return { ok: false, error: 'No OpenAI key and no server proxy available.' };
+      }
+
+      lastUserQueryTopic = promptText.slice(0, 45);
+      appendMessage('user', promptText);
+
+      const contextualMsg = `${promptText}
+
+[Grounding Context:
+${JSON.stringify(window.catAgent ? window.catAgent.getCatalog() : {})}]`;
+
+      chatConversation.push({ role: 'user', content: contextualMsg });
+      if (chatWindow.style.display !== 'flex') chatWindow.style.display = 'flex';
+
+      const loadingMsg = appendMessage('bot', 'Analyzing Caterpillar corporate repository...');
+      setChatState('loading');
+
+      try {
+        const response = await postChatCompletion({
+          model: 'gpt-4o-mini',
+          messages: chatConversation,
+          temperature: 0.3,
+          max_tokens: 280
+        }, key);
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const message = data.choices[0].message;
+        const reply = message.content || 'Explanation generated.';
+
+        loadingMsg.textContent = reply;
+        chatConversation.push({ role: 'assistant', content: reply });
+        if (autoTtsToggle.checked) speakText(reply);
+        setChatState('done');
+        return { ok: true, reply };
+
+      } catch (err) {
+        loadingMsg.textContent = `Error: ${err.message}`;
+        loadingMsg.style.color = '#E53935';
+        setChatState('error', `Copilot error: ${err.message}`);
+        return { ok: false, error: err.message };
+      }
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = userInput.value.trim();
+      if (!msg) return;
+      userInput.value = '';
+      sendQueryToOpenAI(msg);
+    });
+
+    clearChatBtn.addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+      chatConversation = [chatConversation[0]];
+      chatLogs.innerHTML = `
+        <div class="msg-wrap bot">
+          <div class="msg bot">Ready. Ask about Caterpillar strategy, sectors, or ESG.</div>
+        </div>`;
+    });
+
+    window.askCopilot = function(question) {
+      return sendQueryToOpenAI(question);
+    };
+
+    // ==========================================================================
+    // KEY-FREE SEARCH & FILTER
+    // ==========================================================================
+    const globalSearchForm = document.getElementById('globalSearchForm');
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    const filterForm = document.getElementById('sec-selector');
+    const searchResultsEl = document.getElementById('searchResults');
+    const catalogLd = JSON.parse(document.getElementById('catalog-jsonld').textContent);
+    const normSku = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    function getCatalog() {
+      const highlights = catalogLd.itemListElement.map(li => ({
+        id: li.item['@id'].replace(/^#/, ''),
+        sku: li.item.sku,
+        name: li.item.name,
+        description: li.item.description,
+        category: li.item.category
+      }));
+
+      const pillars = Array.from(document.querySelectorAll('.category-grid .cat-card')).map(el => ({
+        id: el.id,
+        code: el.querySelector('.cat-badge-code')?.textContent.trim() || '',
+        name: el.querySelector('.cat-name')?.textContent.trim() || '',
+        description: el.querySelector('.cat-sub')?.textContent.trim() || '',
+        context: el.dataset.context
+      }));
+
+      const programs = Array.from(document.querySelectorAll('.promo-box')).map(el => ({
+        id: el.id,
+        title: el.querySelector('h3')?.textContent.trim() || '',
+        description: el.querySelector('p')?.textContent.trim() || ''
+      }));
+
+      const segments = Array.from(document.querySelectorAll('#indSegment option')).map(o => o.textContent.trim());
+      return { highlights, pillars, programs, segments };
+    }
+
+    function searchCatalog(query) {
+      const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+      const qSku = normSku(query);
+      const cat = getCatalog();
+      const pool = [
+        ...cat.highlights.map(h => ({ type: 'highlight', ...h, haystack: [h.sku, h.name, h.description, h.category].join(' ') })),
+        ...cat.pillars.map(p => ({ type: 'pillar', ...p, haystack: [p.code, p.name, p.description, p.context].join(' ') })),
+        ...cat.programs.map(pr => ({ type: 'program', ...pr, haystack: [pr.title, pr.description].join(' ') }))
+      ];
+
+      const results = pool.map(item => {
+        const hay = item.haystack.toLowerCase();
+        let score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0);
+        if (item.sku && qSku && normSku(item.sku) === qSku) score += 10;
+        const { haystack, ...clean } = item;
+        return { score, ...clean };
+      }).filter(r => r.score > 0).sort((a, b) => b.score - a.score);
+
+      return { query, count: results.length, results };
+    }
+
+    function renderSearchResults(source, result) {
+      const heading = document.createElement('p');
+      heading.textContent = `${result.count} result${result.count === 1 ? '' : 's'} for "${result.query}"`;
+      const list = document.createElement('ol');
+      result.results.forEach((r) => {
+        const li = document.createElement('li');
+        li.dataset.type = r.type;
+        li.dataset.id = r.id;
+        if (r.sku) li.dataset.sku = r.sku;
+        li.textContent = `${r.name || r.title}, ${r.type} (element #${r.id})`;
+        list.appendChild(li);
+      });
+      searchResultsEl.replaceChildren(heading, list);
+      searchResultsEl.dataset.source = source;
+      searchResultsEl.dataset.query = result.query;
+      searchResultsEl.dataset.count = String(result.count);
+      searchResultsEl.dataset.state = 'done';
+    }
+
+    function updateUrlParams(updates) {
+      try {
+        const url = new URL(location.href);
+        Object.entries(updates).forEach(([k, v]) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k)));
+        history.replaceState(history.state, '', url);
+      } catch (e) {}
+    }
+
+    function runLocalSearch(query, { updateUrl = true } = {}) {
+      globalSearchForm.dataset.state = 'loading';
+      searchResultsEl.dataset.state = 'loading';
+      globalSearchInput.value = query;
+      const result = searchCatalog(query);
+      renderSearchResults('search', result);
+      globalSearchForm.dataset.state = 'done';
+      if (updateUrl) updateUrlParams({ q: query });
+      announce('search', 'done', `${result.count} result${result.count === 1 ? '' : 's'} for "${query}"`, { query, count: result.count });
+      return { ok: true, ...result };
+    }
+
+    function readFilterState() {
+      const segmentSelect = document.getElementById('indSegment');
+      return {
+        segment: segmentSelect.options[segmentSelect.selectedIndex].text,
+        topic: document.getElementById('eqTopic').value.trim(),
+        region: document.getElementById('eqRegion').value.trim()
+      };
+    }
+
+    function commitFilter({ updateUrl = true } = {}) {
+      filterForm.dataset.state = 'loading';
+      const state = readFilterState();
+      const keyword = [state.topic, state.region].filter(Boolean).join(' ');
+      const matches = keyword ? searchCatalog(keyword) : { query: '', count: 0, results: [] };
+      if (keyword) renderSearchResults('filter', matches);
+      if (updateUrl) updateUrlParams({ family: state.segment, model: state.topic, serial: state.region });
+      filterForm.dataset.state = 'done';
+      announce('filter', 'done',
+        `Enterprise selector set: ${state.segment}${state.topic ? ', focus ' + state.topic : ''}${state.region ? ', region ' + state.region : ''}. ${matches.count} matching item${matches.count === 1 ? '' : 's'}.`,
+        { state, matchCount: matches.count });
+      return { ok: true, state, matchCount: matches.count, matches: matches.results };
+    }
+
+    function setEquipmentFilter(args = {}, { updateUrl = true } = {}) {
+      const segmentSelect = document.getElementById('indSegment');
+      let matchedSegment = null;
+
+      if (args.family) {
+        const want = String(args.family).toLowerCase();
+        const opt = Array.from(segmentSelect.options).find(o => o.text.toLowerCase().includes(want));
+        if (!opt) {
+          filterForm.dataset.state = 'error';
+          announce('filter', 'error', `No segment matches "${args.family}".`);
+          return { ok: false, error: `No segment matches "${args.family}"`, options: Array.from(segmentSelect.options).map(o => o.text) };
+        }
+        segmentSelect.value = opt.value;
+        matchedSegment = opt.text;
+      }
+
+      if (typeof args.model === 'string') document.getElementById('eqTopic').value = args.model;
+      if (typeof args.serial === 'string') document.getElementById('eqRegion').value = args.serial;
+
+      segmentSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      return { matchedSegment, ...commitFilter({ updateUrl }) };
+    }
+
+    globalSearchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = globalSearchInput.value.trim();
+      if (!query) return;
+      runLocalSearch(query);
+      explainTopic(query, `Search results for "${query}"`);
+    });
+
+    filterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const { segment, topic, region } = commitFilter().state;
+      explainTopic(`${segment} focus: ${topic || 'General'} region: ${region || 'Global'}`);
+    });
+
+    // ==========================================================================
+    // AGENT API (window.catAgent)
+    // ==========================================================================
+    (function initCatAgent() {
+      function getState() {
+        const statusEl = document.getElementById('agentStatus');
+        return {
+          introDone: document.documentElement.dataset.introDone === 'true',
+          copilotProxy: document.documentElement.dataset.copilotProxy || 'checking',
+          search: {
+            state: globalSearchForm.dataset.state,
+            resultsState: searchResultsEl.dataset.state,
+            source: searchResultsEl.dataset.source || null,
+            query: searchResultsEl.dataset.query || '',
+            count: Number(searchResultsEl.dataset.count || 0)
+          },
+          filter: { state: filterForm.dataset.state, ...readFilterState() },
+          chat: { open: chatWindow.dataset.open === 'true', state: chatWindow.dataset.state },
+          modal: {
+            state: sublinkModal.dataset.state,
+            title: sublinkModal.dataset.state === 'open' ? modalTitle.textContent : null
+          },
+          lastAction: statusEl.dataset.lastAction || null,
+          lastActionState: statusEl.dataset.state || null,
+          lastMessage: statusEl.textContent || null
+        };
+      }
+
+      function searchParts(args) {
+        const query = (typeof args === 'string' ? args : (args && args.query) || '').trim();
+        if (!query) return { ok: false, error: 'query is required' };
+        return runLocalSearch(query);
+      }
+
+      function explain(args = {}) {
+        const targetId = typeof args === 'string' ? args : (args && args.targetId);
+        const context = args && args.context;
+        if (!targetId) return { ok: false, error: 'targetId is required' };
+        return explainTopic(targetId, context);
+      }
+
+      async function askCopilot(args) {
+        const question = typeof args === 'string' ? args : args && args.question;
+        if (!question) return { ok: false, error: 'question is required' };
+        if (!apiKeyInput.value.trim() && !(await detectCopilotProxy())) {
+          return { ok: false, error: 'ask_copilot needs the server.js proxy (with OPENAI_API_KEY) or a key in the chat panel.' };
+        }
+        return sendQueryToOpenAI(question);
+      }
+
+      const handlers = {
+        get_state: getState,
+        get_catalog: getCatalog,
+        search_parts: searchParts,
+        set_equipment_filter: (args) => setEquipmentFilter(args),
+        explain_topic: explain,
+        ask_copilot: askCopilot
+      };
+
+      window.catAgent = {
+        version: agentManifest.schema_version,
+        manifest: agentManifest,
+        listTools: () => agentManifest.tools,
+        getState,
+        getCatalog,
+        searchParts,
+        setEquipmentFilter: (args) => setEquipmentFilter(args),
+        explain,
+        askCopilot,
+        async call(name, args = {}) {
+          const fn = handlers[name];
+          if (!fn) return { ok: false, error: `Unknown tool "${name}"`, tools: Object.keys(handlers) };
+          try {
+            return await fn(args);
+          } catch (err) {
+            return { ok: false, error: err.message };
+          }
+        }
+      };
+    })();
+
+    (function applyUrlParams() {
+      const params = new URLSearchParams(location.search);
+      const family = params.get('family');
+      const model = params.get('model');
+      const serial = params.get('serial');
+      if (family || model || serial) {
+        setEquipmentFilter({
+          family: family || undefined,
+          model: model ?? undefined,
+          serial: serial ?? undefined
+        }, { updateUrl: false });
+      }
+      const q = (params.get('q') || '').trim();
+      if (q) runLocalSearch(q, { updateUrl: false });
+    })();
+
+    document.documentElement.dataset.agentReady = 'true';
+    window.dispatchEvent(new CustomEvent('catagent:ready'));
+  </script>
+</body>
+</html>
